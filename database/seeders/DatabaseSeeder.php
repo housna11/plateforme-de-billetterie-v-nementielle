@@ -1,6 +1,13 @@
 <?php
 
 namespace Database\Seeders;
+use App\Models\Event;
+use App\Models\User;
+use App\Models\Newsletter;
+use App\Models\Ticket;
+
+
+
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,5 +25,28 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $users = User::factory(10)->create();
+        $events = Event::factory(5)->create();
+
+        Newsletter::factory(20)->create([
+            'user_id' => function () use ($users) {
+                return $users->random()->id;
+            }
+        ]);
+
+
+
+
+        Ticket::factory(30)->create([
+            'user_id' => function () use ($users) {
+                return $users->random()->id;
+            },
+            'event_id' => function () use ($events) {
+                return $events->random()->id;
+            },
+        ]);
+        
     }
+    
 }

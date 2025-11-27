@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use App\Models\Newsletter;
+use App\Models\Ticket;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,10 +20,20 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nom',
         'email',
         'password',
+        'role'
     ];
+     public function newsletter()
+    {
+        return $this->hasOne(Newsletter::class);
+    }
+
+  public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
